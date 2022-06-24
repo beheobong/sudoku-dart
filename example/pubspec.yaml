@@ -5,4 +5,4 @@ author: forfuns
 homepage: https://github.com/forfuns/sudoku-dart
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.15.1 <3.0.0"

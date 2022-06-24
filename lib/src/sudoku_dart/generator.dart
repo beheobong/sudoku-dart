@@ -11,7 +11,7 @@ class _PuzzleRule {
 
   /// fill 为宫填充数量
   /// count 为宫数量
-  int fill, count;
+  late int fill, count;
 
   _PuzzleRule(int fill, int count) {
     this.fill = fill;
@@ -20,8 +20,8 @@ class _PuzzleRule {
 }
 
 class _FillRule {
-  int fill, count, progress;
-  List<int> indexes;
+  late int fill, count, progress;
+  late List<int> indexes;
 
   _FillRule(int fill, int count, int progress, List<int> indexes) {
     this.fill = fill;
@@ -126,7 +126,7 @@ void _simFill(List<int> puzzle, List<List<bool>> rows, List<List<bool>> cols, Li
   }
 }
 
-List _buildFillRules(List<_PuzzleRule> puzzleRules) {
+List<_FillRule> _buildFillRules(List<_PuzzleRule> puzzleRules) {
   // 分配宫的填充规则
   List<int> distributeZones = List.generate(9, (index) => index);
   List<_FillRule> zoneRules = [];
@@ -222,12 +222,12 @@ Sudoku _generator(List<_FillRule> fillRules) {
 /// 默认级别为:简单(LEVEL.EASY)
 Sudoku generator({LEVEL level = LEVEL.EASY}) {
 
-  List<_PuzzleRule> puzzleRules = _PUZZLE_RULES[level];
+  List<_PuzzleRule> puzzleRules = _PUZZLE_RULES[level]!;
 
   // 构建填充规则
   var fillRules = _buildFillRules(puzzleRules);
 
-  Sudoku sudoku;
+  Sudoku? sudoku;
   int beginTime = DateTime.now().millisecondsSinceEpoch;
 
 //  int retryCount = 0;

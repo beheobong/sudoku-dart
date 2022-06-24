@@ -7,7 +7,7 @@ class Matrix {
 
   static int getCol(int index) => index % 9;
 
-  static int getZone({int index, int row, int col}) {
+  static int getZone({int? index, int? row, int? col}) {
     if (index == null) {
       if (col == null || row == null) {
         throw StateError("index or (col and row) can't be null");
@@ -43,7 +43,7 @@ class Matrix {
   static List<int> getRowIndexes(int row) => List.generate(9, (index) => row * 9 + index);
 }
 
-List shuffle(List list) {
+List<int> shuffle(List<int> list) {
   var random = Random();
   var n, temp;
   for (var i = list.length - 1; i > 0; i--) {
@@ -58,9 +58,6 @@ List shuffle(List list) {
 }
 
 void formatPrint(List<int> arr) {
-  List<List<int>> matrix = [];
-  List<int> rows = [];
-
   int element;
   for (int index = 0; index < arr.length; ++index) {
     element = arr[index];

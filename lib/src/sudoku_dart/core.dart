@@ -4,12 +4,12 @@ import 'generator.dart' as sudoku_generator;
 final List<int> NUMS = List<int>.generate(9, (index) => index + 1);
 
 class Sudoku {
-  List<int> _puzzle;
-  List<int> _answer;
-  int _timeCount;
+  late List<int> _puzzle;
+  late List<int> _answer;
+  late int _timeCount;
   List<int> traceBackNums = shuffle(NUMS);
 
-  Sudoku(List<int> puzzle) {
+  Sudoku(List<int>? puzzle) {
     if (puzzle == null || puzzle.length != 81) {
       throw StateError("请输入正确的数独题");
     }
