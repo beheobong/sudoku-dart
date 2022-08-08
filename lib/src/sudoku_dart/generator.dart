@@ -7,13 +7,13 @@ enum LEVEL { EASY, MEDIUM, HARD, EXPERT }
 
 ///
 /// 谜题规则
-class _PuzzleRule {
+class PuzzleRule {
 
   /// fill 为宫填充数量
   /// count 为宫数量
   late int fill, count;
 
-  _PuzzleRule(int fill, int count) {
+  PuzzleRule(int fill, int count) {
     this.fill = fill;
     this.count = count;
   }
@@ -35,32 +35,32 @@ class _FillRule {
 /// 不同谜题的级别规则
 final _PUZZLE_RULES = {
   LEVEL.EASY: [
-    _PuzzleRule(7, 1),
-    _PuzzleRule(6, 1),
-    _PuzzleRule(5, 3),
-    _PuzzleRule(4, 2),
-    _PuzzleRule(3, 2),
+    PuzzleRule(7, 1),
+    PuzzleRule(6, 1),
+    PuzzleRule(5, 3),
+    PuzzleRule(4, 2),
+    PuzzleRule(3, 2),
   ],
   LEVEL.MEDIUM: [
-    _PuzzleRule(6, 1),
-    _PuzzleRule(5, 3),
-    _PuzzleRule(4, 2),
-    _PuzzleRule(3, 2),
-    _PuzzleRule(2, 1),
+    PuzzleRule(6, 1),
+    PuzzleRule(5, 3),
+    PuzzleRule(4, 2),
+    PuzzleRule(3, 2),
+    PuzzleRule(2, 1),
   ],
   LEVEL.HARD: [
-    _PuzzleRule(5, 1),
-    _PuzzleRule(4, 2),
-    _PuzzleRule(3, 3),
-    _PuzzleRule(2, 2),
-    _PuzzleRule(1, 1),
+    PuzzleRule(5, 1),
+    PuzzleRule(4, 2),
+    PuzzleRule(3, 3),
+    PuzzleRule(2, 2),
+    PuzzleRule(1, 1),
   ],
   LEVEL.EXPERT: [
-    _PuzzleRule(5, 1),
-    _PuzzleRule(4, 1),
-    _PuzzleRule(3, 3),
-    _PuzzleRule(2, 3),
-    _PuzzleRule(1, 1),
+    PuzzleRule(5, 1),
+    PuzzleRule(4, 1),
+    PuzzleRule(3, 3),
+    PuzzleRule(2, 3),
+    PuzzleRule(1, 1),
   ]
 };
 
@@ -126,7 +126,7 @@ void _simFill(List<int> puzzle, List<List<bool>> rows, List<List<bool>> cols, Li
   }
 }
 
-List<_FillRule> _buildFillRules(List<_PuzzleRule> puzzleRules) {
+List<_FillRule> _buildFillRules(List<PuzzleRule> puzzleRules) {
   // 分配宫的填充规则
   List<int> distributeZones = List.generate(9, (index) => index);
   List<_FillRule> zoneRules = [];
@@ -222,8 +222,32 @@ Sudoku _generator(List<_FillRule> fillRules) {
 /// 默认级别为:简单(LEVEL.EASY)
 Sudoku generator({LEVEL level = LEVEL.EASY}) {
 
-  List<_PuzzleRule> puzzleRules = _PUZZLE_RULES[level]!;
+  List<PuzzleRule> puzzleRules = _PUZZLE_RULES[level]!;
 
+  // 构建填充规则
+  var fillRules = _buildFillRules(puzzleRules);
+
+  Sudoku? sudoku;
+  int beginTime = DateTime.now().millisecondsSinceEpoch;
+
+//  int retryCount = 0;
+  while (sudoku == null) {
+    try {
+      sudoku = _generator(fillRules);
+    } catch (e) {
+      // retry
+//      print('retryCount:${++retryCount}');
+    }
+  }
+
+  int endTime = DateTime.now().millisecondsSinceEpoch;
+  print('数独题目生成耗时: ${endTime - beginTime}\'ms');
+
+  return sudoku;
+}
+
+Sudoku generatorPuzz(List<PuzzleRule> puzzleRules) {
+  
   // 构建填充规则
   var fillRules = _buildFillRules(puzzleRules);
 

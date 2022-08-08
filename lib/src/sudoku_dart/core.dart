@@ -18,9 +18,12 @@ class Sudoku {
 
     List<int> answer = puzzle.sublist(0);
     List<List<bool>> rows, cols, zones;
-    rows = List<List<bool>>.generate(81, (index) => List<bool>.generate(10, (index) => false));
-    cols = List<List<bool>>.generate(81, (index) => List<bool>.generate(10, (index) => false));
-    zones = List<List<bool>>.generate(81, (index) => List<bool>.generate(10, (index) => false));
+    rows = List<List<bool>>.generate(
+        81, (index) => List<bool>.generate(10, (index) => false));
+    cols = List<List<bool>>.generate(
+        81, (index) => List<bool>.generate(10, (index) => false));
+    zones = List<List<bool>>.generate(
+        81, (index) => List<bool>.generate(10, (index) => false));
 
     int row, col, zone;
     this._puzzle.asMap().forEach((int index, int num) {
@@ -51,7 +54,8 @@ class Sudoku {
     this._timeCount = DateTime.now().millisecondsSinceEpoch - timeBegin;
   }
 
-  bool _calculate(List<List<bool>> rows, List<List<bool>> cols, List<List<bool>> zones, List<int> answer, int index) {
+  bool _calculate(List<List<bool>> rows, List<List<bool>> cols,
+      List<List<bool>> zones, List<int> answer, int index) {
     int row, col, zone;
     row = Matrix.getRow(index);
     col = Matrix.getCol(index);
@@ -100,5 +104,9 @@ class Sudoku {
 
   List<int> get answer => this._answer;
 
-  static Sudoku generator(sudoku_generator.LEVEL level) => sudoku_generator.generator(level: level);
+  static Sudoku generator(sudoku_generator.LEVEL level) =>
+      sudoku_generator.generator(level: level);
+
+  static Sudoku generatorPuzz(List<sudoku_generator.PuzzleRule> puzzleRules) =>
+      sudoku_generator.generatorPuzz(puzzleRules);
 }
